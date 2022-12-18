@@ -1,6 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Octokit } from "octokit";
-import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { getAllUsers } from 'src/utils/octokit-handler';
 
@@ -13,7 +11,6 @@ export class GithubSearchComponent implements OnInit {
   @ViewChild('usersTable') usersTable!: ElementRef;
 
   constructor(public router: Router, public hostElement: ElementRef) {
-    this.octokit = new Octokit({ auth: environment.github_token });
     this.handleGetUsers()
   }
 
