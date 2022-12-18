@@ -1,0 +1,129 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Profile</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item">Users</li>
+        <li class="breadcrumb-item active">Profile</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section profile">
+    <ng-container [ngSwitch]="true">
+      <div *ngSwitchCase="isLoading">
+        <ng-container *ngTemplateOutlet="userLoading"> </ng-container>
+      </div>
+      <div *ngSwitchCase="isUserNotFound">
+        <ng-container *ngTemplateOutlet="noData"> </ng-container>
+      </div>
+      <div *ngSwitchDefault>
+        <ng-container *ngTemplateOutlet="userProfile"> </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #userLoading>Loading...</ng-template>
+    <ng-template #noData>Username not found!</ng-template>
+    <ng-template #userProfile>
+      <div class="row">
+        <div class="col-xl-4">
+          <div class="card">
+            <div
+              class="card-body profile-card pt-4 d-flex flex-column align-items-center"
+            >
+              <img
+                src="{{ userDetails.avatar_url }}"
+                alt="Profile"
+                class="rounded-circle"
+              />
+              <h2>{{ userDetails.login }}</h2>
+              <h3>{{ userDetails.type }}</h3>
+              <div class="social-links mt-2">
+                <a
+                  target="_blank"
+                  href="{{ userDetails.html_url }}"
+                  class="twitter"
+                  ><i class="bi bi-github"></i
+                ></a>
+                <a
+                  target="_blank"
+                  href="{{ userDetails.avatar_url }}"
+                  class="facebook"
+                  ><i class="bi-person-badge-fill"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8">
+          <div class="card">
+            <div class="card-body pt-3">
+              <ul class="nav nav-tabs nav-tabs-bordered">
+                <li class="nav-item">
+                  <button
+                    class="nav-link active"
+                    data-bs-toggle="tab"
+                    data-bs-target="#profile-overview"
+                  >
+                    Overview
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content pt-2">
+                <div
+                  class="tab-pane fade show active profile-overview"
+                  id="profile-overview"
+                >
+                  <h5 class="card-title">Profile Details</h5>
+                  <div *ngIf="userDetails?.name" class="row">
+                    <div class="col-lg-3 col-md-4 label">Name</div>
+                    <div class="col-lg-9 col-md-8">{{ userDetails.name }}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Username</div>
+                    <div class="col-lg-9 col-md-8">{{ userDetails.login }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Id</div>
+                    <div class="col-lg-9 col-md-8">{{ userDetails.id }}</div>
+                  </div>
+                  <div *ngIf="userDetails?.company" class="row">
+                    <div class="col-lg-3 col-md-4 label">Company</div>
+                    <div class="col-lg-9 col-md-8">
+                      {{ userDetails.company }}
+                    </div>
+                  </div>
+                  <div *ngIf="userDetails?.location" class="row">
+                    <div class="col-lg-3 col-md-4 label">location</div>
+                    <div class="col-lg-9 col-md-8">
+                      {{ userDetails.location }}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Followers</div>
+                    <div class="col-lg-9 col-md-8">
+                      {{ userDetails.followers }}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Following</div>
+                    <div class="col-lg-9 col-md-8">
+                      {{ userDetails.following }}
+                    </div>
+                  </div>
+                  <div *ngIf="userDetails?.plan?.name" class="row">
+                    <div class="col-lg-3 col-md-4 label">Plan</div>
+                    <div class="col-lg-9 col-md-8">
+                      {{ userDetails.plan.name }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </section>
+</main>

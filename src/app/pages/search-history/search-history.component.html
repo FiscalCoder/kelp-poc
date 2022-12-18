@@ -1,0 +1,114 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Search history</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item">History</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Recent Searches</h5>
+            <div class="list-group">
+              <div *ngIf="!historyData?.length; else historyItem">
+                Your search history is empty!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="dashboard">
+            <div class="card top-selling overflow-auto mb-3">
+              <div class="card-body pb-0">
+                <table class="table table-borderless mt-3">
+                  <thead>
+                    <tr>
+                      <th scope="col">Status</th>
+                      <th scope="col">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td scope="row">
+                        <span class="box list-group-item-success"></span>
+                      </td>
+                      <th class="list-group-item-success align-middle">
+                        Successful search
+                      </th>
+                    </tr>
+                    <tr>
+                      <td scope="row">
+                        <span class="box list-group-item-danger"></span>
+                      </td>
+                      <th class="list-group-item-danger align-middle">
+                        Failed search
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row p-2">
+          <button
+            (click)="resetHistoryHandler()"
+            class="btn btn-danger rounded-border"
+            type="button"
+          >
+            <i class="bi bi-eraser-fill"></i>
+            <span class="mx-2">Clear history</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<ng-template #historyItem>
+  <div class="mb-3" *ngFor="let item of historyData; let ind = index">
+    <span
+      class="rounded-border clickable"
+      [routerLink]="['/user-profile', item.query]"
+      *ngIf="item.type === 'SUCCESS'"
+    >
+      <li
+        class="list-group-item list-group-item-success d-flex align-items-center justify-content-between"
+      >
+        <span class="align-middle"> {{ item.query }}</span>
+        <span class="">
+          <button
+            (click)="deleteHistoryItemHandler(ind)"
+            type="button"
+            class="btn btn-danger btn-sm rounded-border"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </span>
+      </li>
+    </span>
+    <span class="rounded-border" *ngIf="item.type === 'FAILURE'">
+      <li
+        class="list-group-item list-group-item-danger d-flex align-items-center justify-content-between"
+      >
+        <span class="align-middle"> {{ item.query }}</span>
+        <span class="">
+          <button
+            (click)="deleteHistoryItemHandler(ind)"
+            type="button"
+            class="btn btn-danger btn-sm"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </span>
+      </li>
+    </span>
+  </div>
+</ng-template>
